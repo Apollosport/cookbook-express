@@ -4,9 +4,10 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 const pool = new Pool();
+const cors = require("cors");
 
 app.use(express.json());
-
+app.use(cors());
 /* app.get("/time", (req, res) => {
   pool
     .query("SELECT NOW()")
@@ -27,7 +28,7 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/", (req, res) => {
+app.post("/postrecipe", (req, res) => {
   const {
     title,
     description,
