@@ -55,6 +55,26 @@ app.post("/postrecipe", (req, res) => {
     .catch((e) => res.sendStatus(500));
 });
 
+app.put("/putrecipes/:id", (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    recipeimage,
+    description,
+    instructions,
+    ingredients,
+    category,
+    idtwo,
+  } = req.body;
+  pool
+    .query(
+      "UPDATE recipes SET title=$1, recipeimage=$2, description=$3, instructions=$4, ingredients=$5, category=$6 WHERE id=$7 Returning *",
+      [title, recipeimage, description, instructions, ingredients, category, id]
+    )
+    .then((data) => res.json(data.rows[0]))
+    .catch((e) => res.sendStatus(500));
+});
+
 app.delete("/:id", (req, res) => {
   const { id } = req.params;
   pool
